@@ -50,9 +50,12 @@ export const buttonPresets = {
                 opacity: '1',
             },
             hoverGsapProperties: {
-                scale: 1.4,
                 duration: gsapSettings.duration.defaultDuration,
                 ease: gsapSettings.ease.elastic,
+            },
+            scale: {
+                active: true,
+                scaleValue: 1.1,
             },
             tooltip: { // WIP
                 active: false,

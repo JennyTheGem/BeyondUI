@@ -1,11 +1,12 @@
 import { buttonPresets, gsapSettings } from './buttonSettings.js';
-import { getMousePosition } from '../../../beyondUI.js';
+import { getMousePosition, beyondAnimate } from '../../../beyondUI.js';
 
 const initializedButtons = new Set();
 
 function applyPreset(btn, preset) {
     btn.classList.add(preset.classname)
 }
+
 
 /**
  * Adds an animated mouse-fill effect to a button.
@@ -68,54 +69,45 @@ function hover(btn, preset) {
     if(btn.classList.contains('deactive')) return;
     if(preset.hover.fill.rippleFill.active) rippleFill(btn, preset);
 
-    const ease = preset.hover.hoverGsapProperties.ease;
-    const duration = preset.hover.hoverGsapProperties.duration;
+    const presetSettings = {
+        ease: preset.hover.hoverGsapProperties.ease,
+        duration: preset.hover.hoverGsapProperties.duration
+    }
 
-    btn.addEventListener('mouseenter', () => {
-        if(preset.hover.fill.backgroundFill.active) {
-            gsap.to(btn, {
-                ease: ease,
-                duration: duration,
+    const pointerEventHover = {
+        container: btn,
+        eventOn: 'pointerenter',
+        eventOff: 'pointerout',
+        presetSettings: presetSettings,
+    }
+
+    if(preset.hover.filter.active) {
+        const filterPreset = {
+            filter: preset.hover.filter.brightness,
+            opacity: preset.hover.filter.opacity
+        }
+        beyondAnimate({
+            ...pointerEventHover,
+            animation: filterPreset,
+            resetValue: ''})
+    }
+    if(preset.hover.fill.backgroundFill.active) {
+        beyondAnimate({
+            ...pointerEventHover,
+            animation: {
                 background: preset.hover.fill.backgroundFill.color
-            })
-        }
-        if(preset.hover.filter.active) {
-            gsap.to(btn, {
-                ease: ease,
-                duration: duration,
-                filter: preset.hover.filter.brightness,
-                opacity: preset.hover.filter.opacity
-            })
-        }
-        gsap.to(btn, {
-            ...preset.hover.hoverGsapProperties
+            },
         })
-
-    })
-
-    btn.addEventListener('mouseout', () => {
-        if(preset.hover.fill.backgroundFill.active) {
-            gsap.to(btn, {
-                ease: ease,
-                duration: duration,
-                background: ''
-            })
-        }
-        if(preset.hover.filter.active) {
-            gsap.to(btn, {
-                ease: ease,
-                duration: duration,
-                filter: '',
-                opacity: ''
-            })
-        }
-        gsap.to(btn, {
-            scale: 1,
-            duration: duration,
-            ease: ease
+    }
+    if(preset.hover.scale.active) {
+        beyondAnimate({
+            ...pointerEventHover,
+            animation: {
+                scale: preset.hover.scale.scaleValue,
+            },
+            resetValue: 1,
         })
-    })
-
+    }
 }
 
 function click(btn, preset) {
