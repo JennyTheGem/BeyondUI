@@ -1,0 +1,42 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-default);
+}
+
+.buttonPreset {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap-sm);
+    contain: content;
+    padding: var(--padding-sm);
+    border-radius: var(--radius-sm);
+    user-select: none;
+    opacity: .5;
+
+    &::after {
+        content: '';
+        position: absolute;
+        background-color: red;
+        aspect-ratio: 1 / 1;
+    }
+
+    img {
+        aspect-ratio: 1 / 1;
+        height: 100%;
+    }
+}
+
+.textButton {
+    border: 1px solid white;
+}
+
+.buttonPreset .fillDiv {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
