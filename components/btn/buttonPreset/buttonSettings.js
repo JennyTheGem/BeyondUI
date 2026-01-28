@@ -7,6 +7,7 @@ export const gsapSettings = {
     },
     ease: {
         elastic: 'elastic.out(0.5,0.5)',
+        superElastic: 'elastic.out(2,0.4)',
         powerOut: 'power.out',
         powerIn: 'power.in',
     },
@@ -29,20 +30,26 @@ export const buttonPresets = {
         classname: 'textButton', // classname for more styling options in CSS
         hover: {
             active: true,
-            delay: 0, // WIP
             fill: {
                 backgroundFill: {
                     active: false,
                     color: '',
                 },
                 rippleFill: {
-                    active: true,
+                    active: false,
                     color: 'rgba(255,255,255,0.3)',
+                    durationForFill: 1,
                 },
             },
-            magnetic: { // WIP (Button slightly follows mouse)
+            magnetic: {
                 active: false,
-                strength: 0.2,
+                strength: 1,
+                magneticGsapSettings: {
+                    durationSnapback: gsapSettings.duration.defaultDuration,
+                    durationFollow: 0.3,
+                    easeSnapback: gsapSettings.ease.superElastic,
+                    easeFollow: 'power.out'
+                }
             },
             filter: {
                 active: true,
@@ -54,8 +61,26 @@ export const buttonPresets = {
                 ease: gsapSettings.ease.elastic,
             },
             scale: {
-                active: true,
-                scaleValue: 1.1,
+                active: false,
+                scaleValue: 1.05,
+            },
+            sizing: {
+                width: {
+                    active: true,
+                    widthValue: 1.2,
+                    widthGsapSettings: {
+                        ease: gsapSettings.ease.superElastic,
+                        duration: gsapSettings.duration.defaultDuration
+                    },
+                },
+                height: {
+                    active: false,
+                    heightValue: 1,
+                    heightGsapSettings: {
+                        ease: gsapSettings.ease.superElastic,
+                        duration: gsapSettings.duration.defaultDuration
+                    },
+                },
             },
             tooltip: { // WIP
                 active: false,

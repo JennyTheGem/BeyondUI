@@ -10,6 +10,8 @@
 .buttonPreset {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     gap: var(--gap-sm);
     contain: content;
     padding: var(--padding-sm);
