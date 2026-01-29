@@ -10,7 +10,7 @@ export function buttonPreset() {
     }
 
     function initButtons() {
-        const buttons = document.querySelectorAll('.buttonPreset');
+        const buttons = document.querySelectorAll('.beyondPreset');
 
         buttons.forEach(btn => {
             if(initializedButtons.has(btn)) return;
@@ -48,6 +48,132 @@ export function buttonPreset() {
             eventOn: 'pointerenter',
             eventOff: 'pointerout',
             presetSettings: presetSettings,
+        }
+
+        if(preset.hover.text.active) {
+            beyondAnimate({
+                container: btn,
+                eventOn: 'pointerover',
+                eventOff: 'pointerleave',
+                presetSettings: {
+                    ease: preset.hover.text.textGsapSettings.ease,
+                    duration: preset.hover.text.textGsapSettings.duration
+                },
+                animation: {
+                    letterSpacing: preset.hover.text.letterSpacing
+                },
+                resetValue: preset.hover.text.letterSpacingReset,
+            })
+        }
+
+        function rectCenterX(el) {
+            const r = el.getBoundingClientRect();
+            return r.left + r.width / 2;
+        }
+        function rectCenterY(el) {
+            const r = el.getBoundingClientRect();
+            return r.top + r.height / 2;
+        }
+
+        if (preset.hover.tooltip.active) {
+            let tooltip = null;
+            let isHovered = false;
+            const direction = preset.hover.tooltip.direction;
+            const delayMs = preset.hover.tooltip.delay;
+
+            const magnetStrength = preset.hover.magnetic.active ? (preset.hover.magnetic.strength / 5) : 0;
+
+            const onPointerMove = (e) => {
+                if (!tooltip) return;
+
+                const rect = btn.getBoundingClientRect();
+                const tRect = tooltip.getBoundingClientRect();
+                let left = 0;
+                let top = 0;
+                const gap = preset.hover.tooltip.gap;
+
+                switch (direction) {
+                    case "top":
+                        top = rect.top - tRect.height - gap;
+                        left = rect.left + rect.width / 2 - tRect.width / 2;
+                        break;
+                    case "bottom":
+                        top = rect.bottom + gap;
+                        left = rect.left + rect.width / 2 - tRect.width / 2;
+                        break;
+                    case "left":
+                        top = rect.top + rect.height / 2 - tRect.height / 2;
+                        left = rect.left - tRect.width - gap;
+                        break;
+                    case "right":
+                        top = rect.top + rect.height / 2 - tRect.height / 2;
+                        left = rect.right + gap;
+                        break;
+                }
+
+                left += (e.clientX - (rect.left + rect.width / 2)) * magnetStrength;
+                top += (e.clientY - (rect.top + rect.height / 2)) * magnetStrength;
+
+                tooltip.style.left = `${left + window.scrollX}px`;
+                tooltip.style.top = `${top + window.scrollY}px`;
+            };
+
+            btn.addEventListener('pointerover', () => {
+                isHovered = true;
+
+                setTimeout(() => {
+                    if (!isHovered || tooltip) return;
+
+                    tooltip = document.createElement('span');
+                    tooltip.className = `tooltip tooltip-${direction}`;
+                    tooltip.textContent = btn.dataset.tooltip;
+                    document.body.appendChild(tooltip);
+
+                    // initial positioning
+                    onPointerMove({ clientX: rectCenterX(btn), clientY: rectCenterY(btn) });
+
+                    gsap.fromTo(
+                        tooltip,
+                        {
+                            opacity: 0,
+                            scale: 0.8,
+                            y: direction === 'top' ? 10 : -10
+                        },
+                        {
+                            duration: preset.hover.tooltip.tooltipGsapSettings.duration,
+                            ease: preset.hover.tooltip.tooltipGsapSettings.ease,
+                            opacity: preset.hover.tooltip.tooltipGsapSettings.opacity,
+                            scale: 1,
+                            y: 0
+                        }
+                    );
+
+                    if (preset.hover.magnetic.active) {
+                        btn.addEventListener('pointermove', onPointerMove);
+                    }
+                }, delayMs);
+            });
+
+            btn.addEventListener('pointerout', () => {
+                isHovered = false;
+
+                if (!tooltip) return;
+
+                if (preset.hover.magnetic.active) {
+                    btn.removeEventListener('pointermove', onPointerMove);
+                }
+
+                gsap.to(tooltip, {
+                    opacity: 0,
+                    scale: 0.8,
+                    duration: 0.2,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        tooltip.remove();
+                        tooltip = null;
+                    }
+                });
+            });
         }
 
         function sizing(dimension) {
@@ -93,7 +219,8 @@ export function buttonPreset() {
             beyondAnimate({
                 ...pointerEventHover,
                 animation: {
-                    scale: preset.hover.scale.scaleValue,
+                    scaleX: preset.hover.scale.scaleX.scaleXValue,
+                    scaleY: preset.hover.scale.scaleY.scaleYValue,
                 },
                 resetValue: 1,
             })

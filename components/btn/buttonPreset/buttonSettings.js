@@ -33,17 +33,17 @@ export const buttonPresets = {
             fill: {
                 backgroundFill: {
                     active: false,
-                    color: '',
+                    color: 'white',
                 },
                 rippleFill: {
-                    active: false,
+                    active: true,
                     color: 'rgba(255,255,255,0.3)',
                     durationForFill: 1,
                 },
             },
-            magnetic: {
-                active: false,
-                strength: 1,
+            magnetic: { // Follows mouse slightly while in the container
+                active: true,
+                strength: 0.01, // (0.05 very slight, 0.1 noticeable, < 0.2 very loose)
                 magneticGsapSettings: {
                     durationSnapback: gsapSettings.duration.defaultDuration,
                     durationFollow: 0.3,
@@ -52,7 +52,7 @@ export const buttonPresets = {
                 }
             },
             filter: {
-                active: true,
+                active: false,
                 brightness: '',
                 opacity: '1',
             },
@@ -61,13 +61,20 @@ export const buttonPresets = {
                 ease: gsapSettings.ease.elastic,
             },
             scale: {
-                active: false,
-                scaleValue: 1.05,
+                active: true,
+                scaleX: {
+                    active: true,
+                    scaleXValue: 1.05,
+                },
+                scaleY: {
+                    active: true,
+                    scaleYValue: 1.05,
+                }
             },
             sizing: {
                 width: {
-                    active: true,
-                    widthValue: 1.2,
+                    active: false,
+                    widthValue: 1.05,
                     widthGsapSettings: {
                         ease: gsapSettings.ease.superElastic,
                         duration: gsapSettings.duration.defaultDuration
@@ -75,28 +82,38 @@ export const buttonPresets = {
                 },
                 height: {
                     active: false,
-                    heightValue: 1,
+                    heightValue: 1.05,
                     heightGsapSettings: {
                         ease: gsapSettings.ease.superElastic,
                         duration: gsapSettings.duration.defaultDuration
                     },
                 },
             },
-            tooltip: { // WIP
-                active: false,
-                direction: '', // top, right, bottom, left
-                description: '',
+            tooltip: { // use: data-tooltip=""
+                active: true,
+                direction: 'top', // top, right, bottom, left
+                delay: 1000, //ms
+                gap: 8, // px
+                tooltipGsapSettings: {
+                    opacity: 1,
+                    ease: 'back.out(1.2)',
+                    duration: gsapSettings.duration.quickDuration,
+                }
             },
             sound: { // WIP
                 active: false,
                 name: 'hover_soft',
                 volume: 0.3,
             },
-            text: { // WIP
+            text: {
                 active: false,
                 letterSpacing: '0.1em',
-                y: -2,
-                splitText: {
+                letterSpacingReset: '0',
+                textGsapSettings: {
+                    ease: gsapSettings.ease.powerOut,
+                    duration: gsapSettings.duration.defaultDuration
+                },
+                splitText: { // WIP
                     active: false
                 }
             },

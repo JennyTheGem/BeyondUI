@@ -73,7 +73,7 @@ export function rippleFill(container, preset) {
         const maxDistance = Math.max(...distances);
 
         gsap.to(fillDiv, {
-            scale: maxDistance / size * 3,
+            scale: maxDistance / size * 4,
             duration: preset.duration,
             ease: preset.ease,
         });

@@ -23,11 +23,15 @@
 
         <!-- CSS other -->
     </head>
-    <body style="height: 100vh">
+    <body style="height: 100vh" >
+    <img src="tmp.jpg" class="img_cover" style="position: absolute">
         <div class="container outfit">
-            <button class="buttonPreset" data-preset="textButton">button</button>
-            <button class="buttonPreset" data-preset="textButton">button</button>
-            <button class="buttonPreset" data-preset="textButton">button</button>
+            <button class="beyondPreset buttonPreset glassyButton" data-preset="textButton" data-tooltip="a btn">button</button>
+            <button class="beyondPreset buttonPreset" data-preset="textButton" data-tooltip="a cooler btn">another btn</button>
+            <button class="beyondPreset buttonPreset" data-preset="textButton" data-tooltip="a btn with text">button</button>
+            <div class="beyondPreset buttonPreset" data-preset="textButton">
+                test
+            </div>
         </div>
         <!-- Scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>

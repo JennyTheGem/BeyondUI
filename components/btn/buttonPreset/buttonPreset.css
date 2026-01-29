@@ -17,7 +17,10 @@
     padding: var(--padding-sm);
     border-radius: var(--radius-sm);
     user-select: none;
-    opacity: .5;
+    white-space: nowrap;
+    position: relative;
+    overflow: visible;
+    border: 1px white solid;
 
     &::after {
         content: '';
@@ -32,8 +35,20 @@
     }
 }
 
-.textButton {
-    border: 1px solid white;
+.tooltip {
+    position: absolute;
+    padding: var(--padding-sm);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 9999;
+
+    opacity: 0;
+    transform: scale(0.9);
+    font-family: 'Outfit', sans-serif;
+    font-size: .65rem;
+    font-weight: 300;
 }
 
 .buttonPreset .fillDiv {
@@ -41,4 +56,48 @@
     border-radius: 50%;
     pointer-events: none;
     z-index: -1;
+}
+
+.glassyButton {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+            inset 0 0 8px 4px rgba(255, 255, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.glassyButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.8),
+            transparent
+    );
+}
+
+.glassyButton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.8),
+            transparent,
+            rgba(255, 255, 255, 0.3)
+    );
 }
