@@ -135,16 +135,14 @@ export function buttonPreset() {
                     gsap.fromTo(
                         tooltip,
                         {
+                            duration: preset.hover.tooltip.tooltipGsapSettings.duration,
+                            ease: preset.hover.tooltip.tooltipGsapSettings.ease,
                             opacity: 0,
-                            scale: 0.8,
-                            y: direction === 'top' ? 10 : -10
                         },
                         {
                             duration: preset.hover.tooltip.tooltipGsapSettings.duration,
                             ease: preset.hover.tooltip.tooltipGsapSettings.ease,
                             opacity: preset.hover.tooltip.tooltipGsapSettings.opacity,
-                            scale: 1,
-                            y: 0
                         }
                     );
 
@@ -249,31 +247,53 @@ export function buttonPreset() {
             return;
         }
 
-        const press = () => {
-            gsap.to(btn, {
-                ...preset.click.clickGsapProperties
+        if(preset.click.scale.active) {
+
+            let downTween = null;
+
+            function down() {
+                downTween?.kill();
+
+                downTween = gsap.to(btn, {
+                    scaleX: preset.click.scale.scaleX.scaleXValue,
+                    scaleY: preset.click.scale.scaleY.scaleYValue,
+                    duration: preset.click.scale.duration,
+                    ease: preset.click.clickGsapProperties.ease,
+                    overwrite: "auto"
+                });
+            }
+
+            function up() {
+                downTween?.kill();
+                downTween = null;
+
+                gsap.to(btn, {
+                    scaleX: preset.hover?.scale?.scaleX?.scaleXValue ?? 1,
+                    scaleY: preset.hover?.scale?.scaleY?.scaleYValue ?? 1,
+                    duration: preset.click.clickGsapProperties.duration,
+                    ease: preset.click.clickGsapProperties.ease,
+                    overwrite: "auto"
+                });
+            }
+
+
+            btn.addEventListener('pointerdown', () => {
+                down()
+            })
+
+            btn.addEventListener('pointerup', () => {
+                up()
             });
-        };
 
-        const release = () => {
-            gsap.to(btn, {
-                ...preset.click.clickGsapProperties,
-                scale: preset.hover.scale.scaleValue,
+
+            btn.addEventListener('keydown', e => {
+                if (e.key === 'Enter') down();
             });
-        };
 
-        btn.addEventListener('pointerdown', press);
-        btn.addEventListener('pointerup', release);
-        btn.addEventListener('pointercancel', release);
-
-        btn.addEventListener('keydown', e => {
-            if (e.key === 'Enter') press();
-        });
-
-        btn.addEventListener('keyup', e => {
-            if (e.key === 'Enter') release();
-        });
-
+            btn.addEventListener('keyup', e => {
+                if (e.key === 'Enter') up();
+            });
+        }
     }
 
     document.addEventListener('DOMContentLoaded', () => {

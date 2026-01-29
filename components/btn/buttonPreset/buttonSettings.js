@@ -43,7 +43,7 @@ export const buttonPresets = {
             },
             magnetic: { // Follows mouse slightly while in the container
                 active: true,
-                strength: 0.01, // (0.05 very slight, 0.1 noticeable, < 0.2 very loose)
+                strength: 0.05, // (0.05 very slight, 0.1 noticeable, < 0.2 very loose)
                 magneticGsapSettings: {
                     durationSnapback: gsapSettings.duration.defaultDuration,
                     durationFollow: 0.3,
@@ -132,6 +132,18 @@ export const buttonPresets = {
                 scale: gsapSettings.scaleNegative.defaultScale,
                 duration: gsapSettings.duration.quickDuration,
                 ease: gsapSettings.ease.elastic,
+            },
+            scale: {
+                active: true,
+                duration: 1,
+                scaleX: {
+                    active: true,
+                    scaleXValue: 0.95,
+                },
+                scaleY: {
+                    active: true,
+                    scaleYValue: 0.95,
+                },
             },
             ripple: { // WIP
                 active: false,
