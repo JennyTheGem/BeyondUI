@@ -217,8 +217,8 @@ export function buttonPreset() {
             beyondAnimate({
                 ...pointerEventHover,
                 animation: {
-                    scaleX: preset.hover.scale.scaleX.scaleXValue,
-                    scaleY: preset.hover.scale.scaleY.scaleYValue,
+                    scaleX: preset.hover.scale.scaleXValue,
+                    scaleY: preset.hover.scale.scaleYValue,
                 },
                 resetValue: 1,
             })
@@ -255,8 +255,8 @@ export function buttonPreset() {
                 downTween?.kill();
 
                 downTween = gsap.to(btn, {
-                    scaleX: preset.click.scale.scaleX.scaleXValue,
-                    scaleY: preset.click.scale.scaleY.scaleYValue,
+                    scaleX: preset.click.scale.scaleXValue,
+                    scaleY: preset.click.scale.scaleYValue,
                     duration: preset.click.scale.duration,
                     ease: preset.click.clickGsapProperties.ease,
                     overwrite: "auto"
@@ -268,8 +268,8 @@ export function buttonPreset() {
                 downTween = null;
 
                 gsap.to(btn, {
-                    scaleX: preset.hover?.scale?.scaleX?.scaleXValue ?? 1,
-                    scaleY: preset.hover?.scale?.scaleY?.scaleYValue ?? 1,
+                    scaleX: preset.hover?.scale?.scaleXValue ?? 1,
+                    scaleY: preset.hover?.scale?.scaleYValue ?? 1,
                     duration: preset.click.clickGsapProperties.duration,
                     ease: preset.click.clickGsapProperties.ease,
                     overwrite: "auto"
@@ -297,11 +297,6 @@ export function buttonPreset() {
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'components/btn/buttonPreset/buttonPreset.css';
-
-        document.head.appendChild(link);
         initButtons()
     });
 }

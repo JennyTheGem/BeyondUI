@@ -62,14 +62,8 @@ export const buttonPresets = {
             },
             scale: {
                 active: true,
-                scaleX: {
-                    active: true,
-                    scaleXValue: 1.05,
-                },
-                scaleY: {
-                    active: true,
-                    scaleYValue: 1.05,
-                }
+                scaleXValue: 1.05,
+                scaleYValue: 1.05,
             },
             sizing: {
                 width: {
@@ -102,7 +96,7 @@ export const buttonPresets = {
             },
             sound: { // WIP
                 active: false,
-                name: 'hover_soft',
+                fileLocation: '',
                 volume: 0.3,
             },
             text: {

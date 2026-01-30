@@ -120,3 +120,37 @@ export function magnetic(container, preset) {
 }
 
 buttonPreset()
+
+// add scripts and styles
+function addEl({ typeString, relString, hrefString, srcString }) {
+    const el = document.createElement(typeString);
+
+    if (typeString === 'link') {
+        if (relString) el.rel = relString;
+        if (hrefString) el.href = hrefString;
+    }
+
+    if (typeString === 'script') {
+        if (srcString) el.src = srcString;
+    }
+
+    document.body.appendChild(el);
+}
+
+addEl({
+    typeString: 'link',
+    relString: 'stylesheet',
+    hrefString: 'beyondUI.css',
+});
+
+addEl({
+    typeString: 'link',
+    relString: 'stylesheet',
+    hrefString: 'components/btn/buttonPreset/buttonPreset.css',
+});
+
+addEl({
+    typeString: 'script',
+    srcString: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js',
+});
+
