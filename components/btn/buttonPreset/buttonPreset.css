@@ -14,13 +14,10 @@
     justify-content: center;
     gap: var(--gap-sm);
     contain: content;
-    padding: var(--padding-sm);
-    border-radius: var(--radius-sm);
     user-select: none;
     white-space: nowrap;
     position: relative;
     overflow: visible;
-    border: 1px white solid;
 
     &::after {
         content: '';
@@ -33,6 +30,12 @@
         aspect-ratio: 1 / 1;
         height: 100%;
     }
+}
+
+.testbtn {
+    padding: var(--padding-sm);
+    border-radius: var(--radius-sm);
+    border: 1px white solid;
 }
 
 .tooltip {

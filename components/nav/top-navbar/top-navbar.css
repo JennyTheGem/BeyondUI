@@ -8,6 +8,8 @@
     height: fit-content;
 
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
     gap: var(--gap-default);
 
@@ -16,6 +18,7 @@
 
 
     button {
+        border: unset;
         cursor: pointer;
         opacity: .8;
         transition: opacity ease var(--duration-default);

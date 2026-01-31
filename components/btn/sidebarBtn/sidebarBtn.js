@@ -20,8 +20,7 @@ import { content } from "./content.js";
  * <div class="SidebarContainer">
  *   <div class="Sidebar">
  *     <button class="SidebarBtn" id="SidebarBtn">
- *       <img class="img_contain"
- *            src="IMG.png"
+ *       <img class="img_contain" src="IMG.png">
  *     </button>
  *     <button onclick="openContent('indexID')"></button>
  *   </div>
@@ -316,14 +315,14 @@ let sendMsgActive = false;
 export function sendMsg(type) {
     if(!sendMsgActive) {
         sendMsgActive = true;
-        SidebarBtn.style.pointerEvents = 'none'
+        SidebarBtn.classList.add('deactive');
         preIndexOpen = indexOpen;
         const showMessageForMs = 5000;
         let timeout = 0;
         if(sidebarOpen) {
             closeSidebar();
             timeout = gsapSettings.duration * 1000 * 3;
-        };
+        }
         setTimeout( () => {
             sidebarContent.innerHTML = '';
             openContent(`${type}`);
@@ -335,31 +334,12 @@ export function sendMsg(type) {
                 setTimeout(() => {
                     openPrevious();
                 }, gsapSettings.duration * 1000);
-                SidebarBtn.style.pointerEvents = '';
+                SidebarBtn.classList.remove('deactive');
                 sendMsgActive = false;
             }, showMessageForMs)
         }, timeout)
     }
 }
 
-// testing
-let enterTimeout = null;
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-
-        if (enterTimeout) {
-            clearTimeout(enterTimeout);
-            enterTimeout = null;
-            sendMsg('custom');
-        } else {
-            enterTimeout = setTimeout(() => {
-                sendMsg('warn');
-                enterTimeout = null;
-            }, 500);
-        }
-    }
-});
-
+window.sendMsg = sendMsg;
 

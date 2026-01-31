@@ -6,11 +6,12 @@ export function buttonPreset() {
     const initializedButtons = new Set();
 
     function applyPreset(btn, preset) {
+        if(preset.classname === '') return
         btn.classList.add(preset.classname)
     }
 
     function initButtons() {
-        const buttons = document.querySelectorAll('.beyondPreset');
+        const buttons = document.querySelectorAll('.buttonPreset');
 
         buttons.forEach(btn => {
             if(initializedButtons.has(btn)) return;
@@ -119,6 +120,7 @@ export function buttonPreset() {
             };
 
             btn.addEventListener('pointerover', () => {
+                if(btn.dataset.tooltip === undefined) return;
                 isHovered = true;
 
                 setTimeout(() => {
@@ -255,8 +257,8 @@ export function buttonPreset() {
                 downTween?.kill();
 
                 downTween = gsap.to(btn, {
-                    scaleX: preset.click.scale.scaleXValue,
-                    scaleY: preset.click.scale.scaleYValue,
+                    scaleX: preset.click.scale.scaleX.scaleXValue,
+                    scaleY: preset.click.scale.scaleY.scaleYValue,
                     duration: preset.click.scale.duration,
                     ease: preset.click.clickGsapProperties.ease,
                     overwrite: "auto"
@@ -267,15 +269,25 @@ export function buttonPreset() {
                 downTween?.kill();
                 downTween = null;
 
+                let scales = {
+                    scaleX: 1,
+                    scaleY: 1,
+                }
+
+                if(preset.hover.scale.active) {
+                    scales = {
+                        scaleX: preset.hover.scale.scaleXValue,
+                        scaleY: preset.hover.scale.scaleYValue
+                    }
+                }
+
                 gsap.to(btn, {
-                    scaleX: preset.hover?.scale?.scaleXValue ?? 1,
-                    scaleY: preset.hover?.scale?.scaleYValue ?? 1,
+                    ...scales,
                     duration: preset.click.clickGsapProperties.duration,
                     ease: preset.click.clickGsapProperties.ease,
                     overwrite: "auto"
                 });
             }
-
 
             btn.addEventListener('pointerdown', () => {
                 down()

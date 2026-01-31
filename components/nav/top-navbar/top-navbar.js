@@ -24,16 +24,24 @@ const selectorPadding = 10;
  * @param selector div that moves to active btn
  */
 function setButtonSelector(parent, button, selector) {
-    const targetWidth = (button.offsetWidth + selectorPadding) + "px";
-    selector.style.height = (button.offsetHeight + selectorPadding) + "px";
-    const targetLeft = button.getBoundingClientRect().left - parent.getBoundingClientRect().left - (selectorPadding / 2) + "px";
+    const buttonRect = button.getBoundingClientRect();
+    const parentRect = parent.getBoundingClientRect();
+
+    const selectorWidth = buttonRect.width + selectorPadding;
+    const selectorHeight = buttonRect.height + selectorPadding;
+
+    const targetLeft =
+        (buttonRect.left - parentRect.left) +
+        (buttonRect.width / 2) -
+        (selectorWidth / 2);
 
     gsap.to(selector, {
         left: targetLeft,
-        width: targetWidth,
-        ease: "elastic.out(0.5,0.5)",
+        width: selectorWidth,
+        height: selectorHeight,
+        ease: "elastic.out(0.5, 0.5)",
         duration: 0.5,
-    })
+    });
 }
 
 topNavbarButtons.forEach(btn => {

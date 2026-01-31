@@ -17,19 +17,43 @@
         <!-- Favicon & Manifest (place your files at these paths) -->
         <link rel="manifest" href="">
         <link rel="icon" href="">
-
-        <!-- CSS Defaults -->
-
-        <!-- CSS other -->
     </head>
     <body style="height: 100vh" >
-    <img src="tmp.jpg" class="img_cover" style="position: absolute">
+    <img src="tmp.jpg" class="img_cover" style="position: absolute; filter: blur(20px)">
         <div class="container outfit">
-            <button class="beyondPreset buttonPreset glassyButton" data-preset="textButton" data-tooltip="a btn">button</button>
-            <button class="beyondPreset buttonPreset" data-preset="textButton" data-tooltip="a cooler btn">another btn</button>
-            <button class="beyondPreset buttonPreset" data-preset="textButton" data-tooltip="a btn with text">button</button>
-            <div class="beyondPreset buttonPreset" data-preset="textButton">
+            <button class="buttonPreset glassyButton" data-preset="textButton" data-tooltip="a btn" onclick="sendMsg('warn')">
+                <img data-img="mdi:delete"  data-color="#f97316">
+                delete song </button>
+            <button class="buttonPreset" data-preset="textButton" data-tooltip="a cooler btn">another btn</button>
+            <button class="buttonPreset" data-preset="textButton" data-tooltip="a btn with text">
+                <img data-img="mdi:tree">
+            </button>
+            <div class="buttonPreset" data-preset="textButton">
                 test
+            </div>
+            <nav class="top-navbar">
+                <button class="buttonPreset" data-preset="headerButton" data-tooltip="navigate home">
+                    <img data-img="mdi:home">
+                    Home </button>
+                <button class="buttonPreset" data-preset="headerButton">
+                    <img data-img="material-symbols:Productivity">
+                    Projects </button>
+                <button class="buttonPreset" data-preset="headerButton">
+                    <img data-img="mdi:image">
+                    Gallary </button>
+                <button class="buttonPreset" data-preset="headerButton">
+                    <img data-img="mdi:about">
+                    About </button>
+                <div class="navbarButtonSelector"></div>
+            </nav>
+            <div class="SidebarContainer">
+                <div class="Sidebar">
+                    <button class="SidebarBtn buttonPreset" id="SidebarBtn" data-preset="textButton">
+                        <img class="img_contain" data-img="mdi:menu">
+                    </button>
+                    <button onclick="openContent('test')" class="buttonPreset" data-preset="textButton"></button>
+                </div>
+                <div class="sidebarContent"></div>
             </div>
         </div>
         <!-- Scripts -->
