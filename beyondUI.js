@@ -1,11 +1,16 @@
 import {buttonPreset} from "./components/btn/buttonPreset/buttonPreset.js";
 
+let pathPre = '';
+if(false) {
+    pathPre = './BeyondUI/';
+}
+
 const componentsConfig = {
     components: {
         beyondUi_Default: {
             default: { // required for most components
                 active: true,
-                css_path: 'beyondUI.css',
+                css_path: pathPre + 'beyondUI.css',
                 js_path: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js',
             },
             imgSearch: {
@@ -16,23 +21,29 @@ const componentsConfig = {
             buttonPreset: {
                 active: true,
                 js_path: '',
-                css_path: 'components/btn/buttonPreset/buttonPreset.css',
+                css_path: pathPre + 'components/btn/buttonPreset/buttonPreset.css',
             },
             sidebarBtn: {
                 active: true,
-                js_path: 'components/btn/sidebarBtn/sidebarBtn.js',
-                css_path: 'components/btn/sidebarBtn/sidebarBtn.css',
+                js_path: pathPre + 'components/btn/sidebarBtn/sidebarBtn.js',
+                css_path: pathPre + 'components/btn/sidebarBtn/sidebarBtn.css',
                 module: true,
             }
         },
         nav: {
             top_navbar: {
                 active: true,
-                js_path: 'components/nav/top-navbar/top-navbar.js',
-                css_path: 'components/nav/top-navbar/top-navbar.css',
+                js_path: pathPre + 'components/nav/top-navbar/top-navbar.js',
+                css_path: pathPre + 'components/nav/top-navbar/top-navbar.css',
             }
         }
     }
+}
+
+const iconifySettings = {
+    defaultPrefix: 'material-symbols:',
+    defaultColor: 'white',
+    defaultFilled: true,
 }
 
 if(componentsConfig.components.beyondUi_Default.imgSearch.active) {
@@ -254,7 +265,7 @@ const processedIconImgs = new WeakSet();
  * HOW IT WORKS
  * ------------
  * - Reads the icon name from `data-img`
- * - Optionally reads color from `data-color` (defaults to white)
+ * - Optionally reads color from `data-color` (defaults to white) and fill from `data-fill` (defaults to true)
  * - Fetches the SVG from the Iconify API
  * - Applies a fallback icon if loading fails
  *
@@ -273,7 +284,7 @@ const processedIconImgs = new WeakSet();
  *
  * HTML EXAMPLE
  * ------------
- * <img data-img="mdi:home" data-color="#ffffff">
+ * <img data-img="mdi:home" data-color="#ffffff" data-fill="true">
  * <img data-img="simple-icons:github">
  *
  * REQUIREMENTS
@@ -321,7 +332,21 @@ export function applyIconifyImages(root = document) {
         if (processedIconImgs.has(img)) return;
 
         let icon = img.dataset.img.toLowerCase();
-        const color = img.dataset.color || '#ffffff';
+        if (!icon.includes(':')) {
+            icon = iconifySettings.defaultPrefix + icon;
+        }
+        const color = img.dataset.color || iconifySettings.defaultColor;
+
+        const filled =
+            img.dataset.fill !== undefined
+                ? img.dataset.fill === 'true'
+                : iconifySettings.defaultFilled;
+
+        if (icon.startsWith('material-symbols:')) {
+            icon += filled ? '' : '-outline';
+        }
+
+        icon = icon.trim().replace(/\s+/g, '-');
 
         img.src = `https://api.iconify.design/${icon}.svg?color=${encodeURIComponent(color)}`;
         img.onerror = () => {
@@ -331,7 +356,6 @@ export function applyIconifyImages(root = document) {
         processedIconImgs.add(img);
     });
 }
-
 
 // Global event listener for deactive class
 document.addEventListener(
@@ -344,6 +368,20 @@ document.addEventListener(
             e.preventDefault();
             e.stopImmediatePropagation();
             console.log('Blocked click on deactive button');
+            gsap.fromTo(
+                btn,
+                {
+                    x: -1,
+                },
+                {
+                    x: 1,
+                    duration: 0.06,
+                    ease: "power1.inOut",
+                    repeat: 5,
+                    yoyo: true,
+                    clearProps: "x"
+                }
+            );
         }
     },
     true

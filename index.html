@@ -18,10 +18,9 @@
         <link rel="manifest" href="">
         <link rel="icon" href="">
     </head>
-    <body style="height: 100vh" >
-    <img src="tmp.jpg" class="img_cover" style="position: absolute; filter: blur(20px)">
+    <body style="height: 100vh" background="black">
         <div class="container outfit">
-            <button class="buttonPreset glassyButton" data-preset="textButton" data-tooltip="a btn" onclick="sendMsg('warn')">
+            <button class="buttonPreset glassyButton deactive" data-preset="textButton" data-tooltip="a btn" onclick="sendMsg('warn')">
                 <img data-img="mdi:delete"  data-color="#f97316">
                 delete song </button>
             <button class="buttonPreset" data-preset="textButton" data-tooltip="a cooler btn">another btn</button>
@@ -33,16 +32,16 @@
             </div>
             <nav class="top-navbar">
                 <button class="buttonPreset" data-preset="headerButton" data-tooltip="navigate home">
-                    <img data-img="mdi:home">
+                    <img data-img="home">
                     Home </button>
                 <button class="buttonPreset" data-preset="headerButton">
-                    <img data-img="material-symbols:Productivity">
+                    <img data-img="productivity">
                     Projects </button>
                 <button class="buttonPreset" data-preset="headerButton">
-                    <img data-img="mdi:image">
+                    <img data-img="image" data-fill="true">
                     Gallary </button>
-                <button class="buttonPreset" data-preset="headerButton">
-                    <img data-img="mdi:about">
+                <button class="buttonPreset deactive" data-preset="headerButton" data-tooltip="WIP">
+                    <img data-img="info">
                     About </button>
                 <div class="navbarButtonSelector"></div>
             </nav>
